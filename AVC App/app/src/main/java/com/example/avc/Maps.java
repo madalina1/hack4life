@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
 public class Maps extends Fragment {
     private static final String[] INITIAL_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -37,6 +40,8 @@ public class Maps extends Fragment {
     private MapView mMapView;
     private GoogleMap googleMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private MarkerOptions options = new MarkerOptions();
+    private ArrayList<Pair<LatLng,String>> latlngs = new ArrayList<>();
 
     public Maps() {
         // Required empty public constructor
@@ -52,6 +57,9 @@ public class Maps extends Fragment {
         mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
+        options.infoWindowAnchor(0.0f,0.0f);
+
+        latlngs.add(new Pair<LatLng,String>(new LatLng(47.1685392,27.582665),"Sf. Spiridon")); //some latitude and logitude value
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -70,6 +78,13 @@ public class Maps extends Fragment {
                 googleMap = mMap;
                 // For showing a move to my location button
                 googleMap.setMyLocationEnabled(true);
+
+                for (Pair<LatLng,String> pair : latlngs) {
+                    options.position(pair.first);
+                    options.title(pair.second);
+                    options.snippet("Institut capabil de tratare AVC");
+                    googleMap.addMarker(options);
+                }
 
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
