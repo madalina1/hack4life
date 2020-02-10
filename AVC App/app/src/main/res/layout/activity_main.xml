@@ -2,28 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_testing"
     tools:context=".MainActivity"
-    android:background="@color/backgroundColor">
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:background="@color/backgroundColor"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@android:color/transparent"
-        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="#EBE0E0"
+        app:tabIndicatorHeight="1dp"
+        app:tabIndicatorFullWidth="false"
         app:tabPaddingBottom="10dp"
         app:tabPaddingEnd="14dp"
         app:tabPaddingStart="14dp"
         app:tabPaddingTop="10dp"
-        app:tabTextColor="#bdbdbd"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+        app:tabSelectedTextColor="#EBE0E0"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="#B8B3B3" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -31,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tabLayout"
         android:layout_centerInParent="true"
-        android:layout_marginTop="120dp"
-        android:background="@color/backgroundColor"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="@+id/tabLayout"
         app:layout_constraintTop_toTopOf="@+id/tabLayout" />
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class Testing extends Fragment {
     public Testing() {
         // Required empty public constructor

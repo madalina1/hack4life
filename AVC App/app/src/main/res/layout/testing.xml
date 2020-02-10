@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Testing"
-    android:background="@color/backgroundColor">
+    android:background="@android:color/transparent"
+    tools:context=".Testing">
 
     <LinearLayout
         android:id="@+id/card_content"
@@ -18,16 +18,16 @@
             android:layout_width="300dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="70dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
             android:clickable="true"
             android:elevation="4dp"
             android:fadingEdgeLength="4dp"
             card_view:cardCornerRadius="8dp"
             card_view:cardElevation="8dp"
-            card_view:cardMaxElevation="8dp"
-            android:layout_marginTop="5dp">
+            card_view:cardMaxElevation="8dp">
 
-                <ImageView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -35,15 +35,15 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/single_blue" />
 
-                <TextView
-                    android:id="@+id/info_text_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center|bottom"
-                    android:text="Testează-te"
-                    android:paddingBottom="20dp"
-                    android:textAppearance="@style/TabLayoutTextStyle"
-                    android:textColor="@color/textColor"/>
+            <TextView
+                android:id="@+id/info_text_help"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:paddingBottom="20dp"
+                android:text="Testează-te"
+                android:textAppearance="@style/TabLayoutTextStyle"
+                android:textColor="@color/textColor" />
 
         </androidx.cardview.widget.CardView>
 
@@ -62,21 +62,20 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/help_blue"
-                android:layout_marginBottom="60dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="60dp"
                 android:contentDescription="@string/app_name"
-                />
+                android:src="@drawable/help_blue" />
 
             <TextView
                 android:id="@+id/info_text_single"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Testează pe cineva"
                 android:gravity="center|bottom"
                 android:paddingBottom="20dp"
+                android:text="Testează pe cineva"
                 android:textAppearance="@style/TabLayoutTextStyle"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
@@ -84,11 +83,11 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimary"
         android:elevation="4dp"
-        android:text="Button"
-        android:background="@color/colorPrimary"/>
+        android:text="Button" />
 
 </FrameLayout>
