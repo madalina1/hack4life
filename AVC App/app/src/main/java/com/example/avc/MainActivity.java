@@ -6,7 +6,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mConstraintLayout = findViewById(R.id.constraintLayout);
         tabLayout = findViewById(R.id.tabLayout);
@@ -61,5 +66,15 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    public void goToSelfTest(View view) {
+        Intent intent = new Intent(this, SelfTesting.class);
+        startActivity(intent);
+    }
+
+    public void goToOtherTest(View view) {
+        Intent intent = new Intent(this, OtherTesting.class);
+        startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context=".Testing">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/card_content"
@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_help"
+            android:id="@+id/card_test_self"
             android:layout_width="300dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
@@ -25,7 +25,8 @@
             android:fadingEdgeLength="4dp"
             card_view:cardCornerRadius="8dp"
             card_view:cardElevation="8dp"
-            card_view:cardMaxElevation="8dp">
+            card_view:cardMaxElevation="8dp"
+            android:onClick="goToSelfTest">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -48,7 +49,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_single"
+            android:id="@+id/card_test_other"
             android:layout_width="300dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
@@ -57,7 +58,8 @@
             android:fadingEdgeLength="4dp"
             card_view:cardCornerRadius="8dp"
             card_view:cardElevation="8dp"
-            card_view:cardMaxElevation="8dp">
+            card_view:cardMaxElevation="8dp"
+            android:onClick="goToOtherTest">
 
             <ImageView
                 android:layout_width="match_parent"

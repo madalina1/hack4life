@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Maps">
+    tools:context=".MainActivity">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,5 +14,10 @@
         android:text="Maps Fragment"
         android:textSize="16sp"
         android:textStyle="bold"/>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
