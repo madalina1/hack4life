@@ -10,7 +10,9 @@
     <LinearLayout
         android:id="@+id/card_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -18,23 +20,22 @@
             android:layout_width="300dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="70dp"
             android:clickable="true"
-            android:elevation="4dp"
+            android:elevation="8dp"
             android:fadingEdgeLength="4dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp"
-            card_view:cardMaxElevation="8dp"
-            android:onClick="goToSelfTest">
+            android:onClick="goToSelfTest"
+            card_view:cardCornerRadius="20dp"
+            card_view:cardElevation="12dp"
+            card_view:cardMaxElevation="8dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="60dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/single_blue" />
+                android:src="@drawable/single_light_blue" />
 
             <TextView
                 android:id="@+id/info_text_help"
@@ -43,7 +44,7 @@
                 android:gravity="center|bottom"
                 android:paddingBottom="20dp"
                 android:text="Testează-te"
-                android:textAppearance="@style/TabLayoutTextStyle"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="@color/textColor" />
 
         </androidx.cardview.widget.CardView>
@@ -54,17 +55,17 @@
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:elevation="4dp"
+            android:elevation="8dp"
             android:fadingEdgeLength="4dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp"
-            card_view:cardMaxElevation="8dp"
-            android:onClick="goToOtherTest">
+            android:onClick="goToSelfTest"
+            card_view:cardCornerRadius="20dp"
+            card_view:cardElevation="12dp"
+            card_view:cardMaxElevation="8dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="60dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/help_blue" />
@@ -76,20 +77,20 @@
                 android:gravity="center|bottom"
                 android:paddingBottom="20dp"
                 android:text="Testează pe cineva"
-                android:textAppearance="@style/TabLayoutTextStyle"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="@color/textColor" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:text="Button" />
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_settings_white_32dp" />
 
 </FrameLayout>
