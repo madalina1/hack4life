@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "44662377586",
+    "firebase_url": "https://avcdetector-caff2.firebaseio.com",
+    "project_id": "avcdetector-caff2",
+    "storage_bucket": "avcdetector-caff2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44662377586:android:346d8218958239254646eb",
+        "android_client_info": {
+          "package_name": "com.example.avc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44662377586-184hcse9encjdheevv6n5id07r6ln0oi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUHYj0D1TkR9ibSaAIplDvyZH0RAbOvj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44662377586-184hcse9encjdheevv6n5id07r6ln0oi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
