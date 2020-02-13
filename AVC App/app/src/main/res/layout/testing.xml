@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     tools:context=".MainActivity"
-    android:paddingBottom="40dp"
+    android:paddingBottom="20dp"
     android:paddingTop="40dp"
     android:paddingStart="20dp"
     android:paddingEnd="20dp">
@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
