@@ -32,6 +32,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Maps extends Fragment {
@@ -64,9 +77,39 @@ public class Maps extends Fragment {
 
         options.infoWindowAnchor(0.0f,0.0f);
 
-        latlngs.add(new Pair<>(new LatLng(47.1685392, 27.582665), "Spitalul Sfântul Spiridon"));
-        latlngs.add(new Pair<>(new LatLng(47.1609793,27.607468), "Spitalul Clinic de Urgență \"Prof. Dr. Nicolae Oblu\""));
 
+        InputStream is = getResources().openRawResource(R.raw.hospital_locations);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String jsonString = writer.toString();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject explrObject = jsonArray.getJSONObject(i);
+                double latitude = explrObject.getDouble("latitude");
+                double longitude = explrObject.getDouble("longitude");
+                String hospitalName = explrObject.getString("hospitalName");
+                latlngs.add(new Pair<>(new LatLng(latitude, longitude), hospitalName));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
