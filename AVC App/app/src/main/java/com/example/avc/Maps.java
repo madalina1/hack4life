@@ -1,8 +1,10 @@
 package com.example.avc;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -23,6 +26,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +53,7 @@ public class Maps extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(PackageManager.PERMISSION_GRANTED!= ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),Manifest.permission.ACCESS_FINE_LOCATION)){
             requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
         }
@@ -59,7 +64,9 @@ public class Maps extends Fragment {
 
         options.infoWindowAnchor(0.0f,0.0f);
 
-        latlngs.add(new Pair<LatLng,String>(new LatLng(47.1685392,27.582665),"Sf. Spiridon")); //some latitude and logitude value
+        latlngs.add(new Pair<>(new LatLng(47.1685392, 27.582665), "Spitalul Sfântul Spiridon"));
+        latlngs.add(new Pair<>(new LatLng(47.1609793,27.607468), "Spitalul Clinic de Urgență \"Prof. Dr. Nicolae Oblu\""));
+
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -93,9 +100,31 @@ public class Maps extends Fragment {
                         if (task.isSuccessful()) {
                             Location mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
+
+                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                for (Pair<LatLng,String> marker : latlngs) {
+                                    builder.include(marker.first);
+                                }
+                                builder.include(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                                LatLngBounds bounds = builder.build();
+                                int padding = 80; // offset from edges of the map in pixels
+
+
                                 CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mLastKnownLocation.getLatitude(),
-                                        mLastKnownLocation.getLongitude())).zoom(16).build();
+                                        mLastKnownLocation.getLongitude())).zoom(14).build();
                                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
+
+                                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                    @Override
+                                    public void onInfoWindowClick(Marker marker) {
+//                                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+marker.getPosition().latitude+","+marker.getPosition().longitude);
+                                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+marker.getPosition().latitude+","+marker.getPosition().longitude+"("+ marker.getTitle()+")");
+                                        Intent intent = new Intent(Intent.ACTION_VIEW,gmmIntentUri);
+                                        intent.setPackage("com.google.android.apps.maps");
+                                        startActivity(intent);
+                                    }
+                                });
                             }
                         }
                     }
