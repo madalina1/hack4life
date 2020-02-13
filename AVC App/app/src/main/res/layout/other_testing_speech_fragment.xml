@@ -9,27 +9,102 @@
     tools:context=".ui.othertesting.OtherTestingSpeechFragment"
     android:paddingBottom="40dp"
     android:paddingTop="40dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp">
 
-    <TextView
-        android:id="@+id/speechMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="SpeechTestingFragment"
-        />
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="177dp"
+            android:layout_gravity="center|top"
+            android:layout_marginBottom="40dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/arms_weakness" />
+
+        <TextView
+            android:id="@+id/speechTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Înțelegerea unui mesaj vocal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginBottom="15dp"
+            />
+
+        <TextView
+            android:id="@+id/speechMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Cere-i persoanei să repete o frază simplă (de exemplu “Ana are mere”). Nu poți distinge ce zice sau vorbește ciudat?"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textSize="14sp"
+            />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+            <RadioButton android:id="@+id/radio_speech_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Da"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:onClick="onSpeechRadioButtonClicked"
+                android:textSize="16sp"
+                android:textColor="@color/radioColor"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/radioColor"/>
+            <RadioButton android:id="@+id/radio_speech_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nu"
+                android:onClick="onSpeechRadioButtonClicked"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textSize="16sp"
+                android:textColor="@color/radioColor"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/radioColor"/>
+            <RadioButton android:id="@+id/radio_speech_idk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nu stiu"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:onClick="onSpeechRadioButtonClicked"
+                android:textSize="16sp"
+                android:textColor="@color/radioColor"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:buttonTint="@color/radioColor"/>
+        </RadioGroup>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/speechButton"
+        android:id="@+id/otherSpeechButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:layout_gravity="bottom|end"
         android:gravity="center"
-        android:text="NEXT Speech"
-        android:onClick="goToOtherTestingTime"/>
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/buttonColor"
+        android:text="Pasul următor"
+        android:textSize="16sp"
+        android:onClick="goToOtherTestingTime"
+        android:enabled="false"/>
 
 
 </FrameLayout>

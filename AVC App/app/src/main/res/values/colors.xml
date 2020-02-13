@@ -6,4 +6,6 @@
     <color name="statusBarColor">#eeeeee</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="textColor">#424242</color>
+    <color name="buttonColor">#9e9e9e</color>
+    <color name="radioColor">#49A3F0</color>
 </resources>

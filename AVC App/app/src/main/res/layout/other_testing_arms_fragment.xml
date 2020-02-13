@@ -9,27 +9,102 @@
     tools:context=".ui.othertesting.OtherTestingArmsFragment"
     android:paddingBottom="40dp"
     android:paddingTop="40dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp">
 
-        <TextView
-            android:id="@+id/armsMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:text="ArmsTestingFragment"
-            />
+            android:gravity="center">
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="177dp"
+                    android:layout_gravity="center|top"
+                    android:layout_marginBottom="40dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/arms_weakness" />
+
+                <TextView
+                    android:id="@+id/armsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Testarea deficitului motor"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/armsMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Cere persoanei să ridice simultan ambele brațe deasupra capului. Unul dintre ele rămâne inert sau mai jos decât celălalt?"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textSize="14sp"
+                    />
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="40dp">
+                        <RadioButton android:id="@+id/radio_arms_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Da"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:onClick="onArmsRadioButtonClicked"
+                            android:textSize="16sp"
+                            android:textColor="@color/radioColor"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:buttonTint="@color/radioColor"/>
+                        <RadioButton android:id="@+id/radio_arms_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nu"
+                            android:onClick="onArmsRadioButtonClicked"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:textSize="16sp"
+                            android:textColor="@color/radioColor"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:buttonTint="@color/radioColor"/>
+                        <RadioButton android:id="@+id/radio_arms_idk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nu stiu"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                            android:onClick="onArmsRadioButtonClicked"
+                            android:textSize="16sp"
+                            android:textColor="@color/radioColor"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:buttonTint="@color/radioColor"/>
+                </RadioGroup>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/armsButton"
+            android:id="@+id/otherArmsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:layout_gravity="bottom|end"
             android:gravity="center"
-            android:text="NEXT Arms"
-            android:onClick="goToOtherTestingSpeech"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/buttonColor"
+            android:text="Pasul următor"
+            android:textSize="16sp"
+            android:onClick="goToOtherTestingSpeech"
+            android:enabled="false"/>
 
 
 </FrameLayout>

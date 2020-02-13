@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.avc.ui.othertesting.OtherTestingArmsFragment;
@@ -62,5 +64,62 @@ public class OtherTesting extends AppCompatActivity {
 
     public void goToOtherTestingSymptoms(View view) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingSymptomsFragment.newInstance()).commitNow();
+    }
+
+    public void onFaceRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        Button nextFaceButton = (Button) findViewById(R.id.otherFaceButton);
+        nextFaceButton.setEnabled(true);
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_face_yes:
+                if (checked)
+                    break;
+            case R.id.radio_face_no:
+                if (checked)
+                    break;
+            case R.id.radio_face_idk:
+                if (checked)
+                    break;
+        }
+    }
+
+    public void onArmsRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        Button nextArmsButton = (Button) findViewById(R.id.otherArmsButton);
+        nextArmsButton.setEnabled(true);
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_arms_yes:
+                if (checked)
+                    break;
+            case R.id.radio_arms_no:
+                if (checked)
+                    break;
+            case R.id.radio_arms_idk:
+                if (checked)
+                    break;
+        }
+    }
+
+    public void onSpeechRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        Button nextSpeechButton = (Button) findViewById(R.id.otherSpeechButton);
+        nextSpeechButton.setEnabled(true);
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_speech_yes:
+                if (checked)
+                    break;
+            case R.id.radio_speech_no:
+                if (checked)
+                    break;
+            case R.id.radio_speech_idk:
+                if (checked)
+                    break;
+        }
     }
 }

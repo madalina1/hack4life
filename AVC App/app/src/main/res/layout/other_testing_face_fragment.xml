@@ -9,8 +9,34 @@
     tools:context=".ui.othertesting.OtherTestingFaceFragment"
     android:paddingBottom="40dp"
     android:paddingTop="40dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/face_drooping"
+            android:layout_marginBottom="40dp"/>
+
+        <TextView
+            android:id="@+id/faceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Recunoașterea asimetriei faciale"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginBottom="15dp"
+            />
 
         <TextView
             android:id="@+id/faceMessage"
@@ -18,18 +44,67 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="FaceTestingFragment"
+            android:text="Cere persoanei să zâmbească. Ți se pare că fața e asimetrică sau gura e căzută într-o parte ca în imaginea de mai sus?"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textSize="14sp"
             />
 
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+                <RadioButton android:id="@+id/radio_face_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Da"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:onClick="onFaceRadioButtonClicked"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"/>
+                <RadioButton android:id="@+id/radio_face_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nu"
+                    android:onClick="onFaceRadioButtonClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"/>
+                <RadioButton android:id="@+id/radio_face_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nu stiu"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:onClick="onFaceRadioButtonClicked"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"/>
+        </RadioGroup>
+        </LinearLayout>
+
         <Button
-            android:id="@+id/faceButton"
+            android:id="@+id/otherFaceButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:layout_gravity="bottom|end"
             android:gravity="center"
-            android:text="NEXT"
-            android:onClick="goToOtherTestingArms"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/buttonColor"
+            android:text="Pasul următor"
+            android:textSize="16sp"
+            android:onClick="goToOtherTestingArms"
+            android:enabled="false"/>
 
 
 </FrameLayout>
