@@ -14,25 +14,24 @@ import android.view.ViewGroup;
 
 import com.example.avc.R;
 
-public class OtherTestingFragment extends Fragment {
+public class OtherTestingSymptomsFragment extends Fragment {
 
-    private OtherTestingViewModel mViewModel;
+    private OtherTestingSymptomsViewModel mViewModel;
 
-    public static OtherTestingFragment newInstance() {
-        return new OtherTestingFragment();
+    public static OtherTestingSymptomsFragment newInstance() {
+        return new OtherTestingSymptomsFragment();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.other_testing_fragment, container, false);
+        return inflater.inflate(R.layout.other_testing_symptoms_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(OtherTestingViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(OtherTestingSymptomsViewModel.class);
         // TODO: Use the ViewModel
     }
 

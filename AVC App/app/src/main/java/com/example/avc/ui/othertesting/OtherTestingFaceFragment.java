@@ -1,4 +1,4 @@
-package com.example.avc.ui.selftesting;
+package com.example.avc.ui.othertesting;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -14,25 +14,25 @@ import android.view.ViewGroup;
 
 import com.example.avc.R;
 
-public class SelfTestingFragment extends Fragment {
+public class OtherTestingFaceFragment extends Fragment {
 
-    private SelfTestingViewModel mViewModel;
+    private OtherTestingFaceViewModel mViewModel;
 
-    public static SelfTestingFragment newInstance() {
-        return new SelfTestingFragment();
+    public static OtherTestingFaceFragment newInstance() {
+        return new OtherTestingFaceFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.self_testing_fragment, container, false);
+        return inflater.inflate(R.layout.other_testing_face_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SelfTestingViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(OtherTestingFaceViewModel.class);
         // TODO: Use the ViewModel
     }
 

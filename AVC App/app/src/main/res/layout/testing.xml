@@ -5,14 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:paddingBottom="40dp"
+    android:paddingTop="40dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
 
     <LinearLayout
         android:id="@+id/card_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -57,7 +61,7 @@
             android:clickable="true"
             android:elevation="8dp"
             android:fadingEdgeLength="4dp"
-            android:onClick="goToSelfTest"
+            android:onClick="goToOtherTest"
             card_view:cardCornerRadius="20dp"
             card_view:cardElevation="12dp"
             card_view:cardMaxElevation="8dp">
@@ -87,9 +91,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
         android:background="@android:color/transparent"
+        android:layout_marginEnd="20dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_settings_white_32dp" />
 

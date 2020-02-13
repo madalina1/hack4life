@@ -23,8 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBNm-E7ZO5XA7WYNaiW0RA1KUZAEG-XIEE"/>
-        <activity android:name=".OtherTesting" />
-        <activity android:name=".SelfTesting" />
+        <activity android:name=".OtherTesting" android:theme="@style/TestingLayout" />
+        <activity android:name=".SelfTesting" android:theme="@style/TestingLayout" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

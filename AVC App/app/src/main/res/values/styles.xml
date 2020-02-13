@@ -13,9 +13,18 @@
         <item name="android:fitsSystemWindows">false</item>
     </style>
 
+    <style name="TestingLayout" parent="AppTheme">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <style name="AppTheme.Launcher">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
     </style>
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
