@@ -1,7 +1,11 @@
 package com.example.avc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +22,7 @@ import static com.example.avc.MainActivity.setWindowFlag;
 
 public class SelfTesting extends AppCompatActivity {
     private Boolean backPressed;
+    private int REQUEST_CODE_PERMISSIONS = 42;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,10 @@ public class SelfTesting extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 28) {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.SEND_SMS,Manifest.permission.CALL_PHONE}, REQUEST_CODE_PERMISSIONS);
         }
     }
 
@@ -59,4 +68,5 @@ public class SelfTesting extends AppCompatActivity {
     public void goToSelfTestingTime(View view) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
     }
+
 }

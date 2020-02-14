@@ -69,8 +69,9 @@ public class OtherTesting extends AppCompatActivity {
     public void onFaceRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
-        Button nextFaceButton = (Button) findViewById(R.id.otherFaceButton);
+        Button nextFaceButton = findViewById(R.id.otherFaceButton);
         nextFaceButton.setEnabled(true);
+        nextFaceButton.setTextColor(getColor(R.color.buttonColor));
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radio_face_yes:
@@ -90,6 +91,8 @@ public class OtherTesting extends AppCompatActivity {
 
         Button nextArmsButton = (Button) findViewById(R.id.otherArmsButton);
         nextArmsButton.setEnabled(true);
+        nextArmsButton.setTextColor(getColor(R.color.buttonColor));
+
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radio_arms_yes:
@@ -109,6 +112,7 @@ public class OtherTesting extends AppCompatActivity {
 
         Button nextSpeechButton = (Button) findViewById(R.id.otherSpeechButton);
         nextSpeechButton.setEnabled(true);
+        nextSpeechButton.setTextColor(getColor(R.color.buttonColor));
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radio_speech_yes:

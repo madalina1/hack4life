@@ -2,6 +2,7 @@ package com.example.avc.ui.selftesting;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,5 +35,6 @@ public class SelfTestingArmsFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(SelfTestingArmsViewModel.class);
         // TODO: Use the ViewModel
     }
+
 
 }
