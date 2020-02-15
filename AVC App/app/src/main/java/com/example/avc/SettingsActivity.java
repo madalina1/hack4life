@@ -1,6 +1,7 @@
 package com.example.avc;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,6 +17,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private static Preference myPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +33,13 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            Preference myPref = (Preference) findPreference("favoriteContact");
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                    startActivityForResult(i, 7);
-                    return true;
-                }
+            myPref = (Preference) findPreference("favoriteContactPref");
+
+            myPref.setSummary("Număr de contact: " + getContext().getSharedPreferences("favoriteContactPref", MODE_PRIVATE).getString("phoneNum","Nu este setat"));
+            myPref.setOnPreferenceClickListener(preference -> {
+                Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(i, 7);
+                return true;
             });
         }
 
@@ -47,7 +50,8 @@ public class SettingsActivity extends AppCompatActivity {
             String TempNameHolder, TempNumberHolder, TempContactID, IDresult = "" ;
             String phoneNum = "";
             int IDresultHolder ;
-            Preference myPref = (Preference) findPreference("favoriteContact");
+            myPref.setSummary("Număr de contact: " +
+                    getContext().getSharedPreferences("favoriteContactPref", MODE_PRIVATE).getString("phoneNum",""));
 
             if (resultCode == Activity.RESULT_OK && requestCode == 7) {
 
@@ -76,10 +80,11 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                     Toast.makeText(getActivity().getBaseContext(), "Număr de contact: "+phoneNum, Toast.LENGTH_LONG).show();
                     myPref.setSummary("Număr de contact: " + phoneNum);
-                    SharedPreferences.Editor editor = getContext().getSharedPreferences("favoriteContact", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = getContext().getSharedPreferences("favoriteContactPref", MODE_PRIVATE).edit();
                     editor.putString("phoneNum", phoneNum);
-                     editor.apply();
-            }
+                    editor.apply();
+                    editor.commit();
+                }
             }
         }
     }
