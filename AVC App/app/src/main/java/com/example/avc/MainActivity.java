@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.SEND_SMS,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_CONTACTS,
     };
     private static final int INITIAL_REQUEST=1337;
 

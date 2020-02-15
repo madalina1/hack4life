@@ -3,6 +3,7 @@ package com.example.avc;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.widget.Toast;
@@ -42,17 +43,37 @@ public class SettingsActivity extends AppCompatActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             // TODO Auto-generated method stub
             super.onActivityResult(requestCode, resultCode, data);
+            String TempNameHolder, TempNumberHolder, TempContactID, IDresult = "" ;
+            String phoneNum = "";
+            int IDresultHolder ;
 
             if (resultCode == Activity.RESULT_OK && requestCode == 7) {
 
-                Cursor s = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                Uri uri = data.getData();
+                Cursor cursor1 = getContext().getContentResolver().query(uri, null,
                         null, null, null);
+                if (cursor1.moveToFirst()) {
+                    TempNameHolder = cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
-                if (s.moveToFirst()) {
-                    String phoneNum = s.getString(s.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    Toast.makeText(getActivity().getBaseContext(), phoneNum, Toast.LENGTH_LONG).show();
+                    TempContactID = cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts._ID));
+
+                    IDresult = cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+
+                    IDresultHolder = Integer.valueOf(IDresult) ;
+
+                    if (IDresultHolder == 1) {
+
+                        Cursor cursor2 = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + TempContactID, null, null);
+
+                        while (cursor2.moveToNext()) {
+
+                            TempNumberHolder = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                            phoneNum = TempNumberHolder;
+                        }
                 }
-
+                Toast.makeText(getActivity().getBaseContext(), "Număr de contact: "+phoneNum, Toast.LENGTH_LONG).show();
+            }
             }
         }
     }
