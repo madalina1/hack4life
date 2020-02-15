@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                     myPref.setSummary("Număr de contact: " + phoneNum);
                     SharedPreferences.Editor editor = getContext().getSharedPreferences("favoriteContact", MODE_PRIVATE).edit();
                     editor.putString("phoneNum", phoneNum);
-                    editor.apply();
+                     editor.apply();
             }
             }
         }
