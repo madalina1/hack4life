@@ -5,5 +5,104 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_test_self"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="70dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:fadingEdgeLength="4dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/symptoms" />
+
+        <TextView
+            android:id="@+id/info_text_help"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="-60dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="20dp"
+            android:text="ACCIDENT VASCULAR CEREBRAL (AVC)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/info_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="40dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="Dupa declansarea accidentului vascular cerebral, fiecare minut conteaza! Interventia rapida reduce semnificativ riscul de dizabilitate sau deces. Foloseste formula F.A.S.T. (“rapid”, din limba engleza) pentru a identifica semnele de alarma ale AVC si suna de urgenta la 112!"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/info_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="120dp"
+            android:text="Formula F.A.S.T."
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/info_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="180dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="Daca suspectezi ca cineva sufera un AVC, actioneaza rapid (F.A.S.T.) si fa-i urmatorul test:"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/info_text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="380dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="F – Face (Fata) – Cere persoanei sa zambeasca. Ti se pare ca fata e asimetrica sau gura e cazuta intr-o parte?
+
+A - Arms (Brate) – Cere persoanei sa ridice simultan ambele brate deasupra capului. Unul dintre ele ramane inert sau mai jos decat celalalt?
+
+S – Speech (Vorbire) - Cere-i persoanei sa repete o fraza simpla (de exemplu “Cerul este albastru”). Nu poti distinge ce zice sau vorbeste ciudat?
+
+T – Time (Timp) – Daca remarci oricare dintre aceste semne, suna IMEDIAT la 112! Pentru ca persoana sa fie transportata cat mai repede la spital, spune-i operatorului ca suspectezi ca aceasta a suferit un accident vascular cerebral si transmite-i ora la care au aparut primele simptome."
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/textColor" />
+
+    </androidx.cardview.widget.CardView>
+    </ScrollView>
+
 
 </FrameLayout>

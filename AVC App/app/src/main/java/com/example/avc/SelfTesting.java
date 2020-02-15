@@ -1,12 +1,8 @@
 package com.example.avc;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -27,9 +23,9 @@ import static com.example.avc.MainActivity.setWindowFlag;
 public class SelfTesting extends AppCompatActivity {
     private Boolean backPressed;
 
-    public short faceResult=-1;
-    public short armsResult=-1;
-    public short speechResult=-1;
+    private short faceResult=-1;
+    private short armsResult=-1;
+    private short speechResult=-1;
     public boolean faceNumbness=false;
     public boolean headache=false;
     public boolean puking=false;
@@ -79,13 +75,13 @@ public class SelfTesting extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
         else{
             short unknown = 0;
-            if(this.faceResult == 0)
+            if(this.getFaceResult() == 0)
                 unknown++;
-            if(this.armsResult== 0)
+            if(this.getArmsResult() == 0)
                 unknown++;
-            if(this.speechResult== 0)
+            if(this.getSpeechResult() == 0)
                 unknown++;
-            if(this.faceResult == 1 || this.armsResult == 1 || this.speechResult ==1 || unknown>=2){
+            if(this.getFaceResult() == 1 || this.getArmsResult() == 1 || this.getSpeechResult() ==1 || unknown>=2){
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
             }
             else{
@@ -143,5 +139,29 @@ public class SelfTesting extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:112112"));
         startActivity(intent);
+    }
+
+    public short getFaceResult() {
+        return faceResult;
+    }
+
+    public void setFaceResult(short faceResult) {
+        this.faceResult = faceResult;
+    }
+
+    public short getArmsResult() {
+        return armsResult;
+    }
+
+    public void setArmsResult(short armsResult) {
+        this.armsResult = armsResult;
+    }
+
+    public short getSpeechResult() {
+        return speechResult;
+    }
+
+    public void setSpeechResult(short speechResult) {
+        this.speechResult = speechResult;
     }
 }

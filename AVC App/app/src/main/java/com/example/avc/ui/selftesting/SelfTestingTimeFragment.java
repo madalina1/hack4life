@@ -1,7 +1,6 @@
 package com.example.avc.ui.selftesting;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.avc.MainActivity;
-import com.example.avc.OtherTesting;
 import com.example.avc.R;
 import com.example.avc.SelfTesting;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -212,15 +210,15 @@ public class SelfTestingTimeFragment extends Fragment {
                             otherSymptoms++;
 
                         short unknown = 0;
-                        if(testingActivity.faceResult == 0)
+                        if(testingActivity.getFaceResult() == 0)
                             unknown++;
-                        if(testingActivity.armsResult== 0)
+                        if(testingActivity.getArmsResult() == 0)
                             unknown++;
-                        if(testingActivity.speechResult== 0)
+                        if(testingActivity.getSpeechResult() == 0)
                             unknown++;
 
                         //Severe cases
-                        if(testingActivity.faceResult == 1 || testingActivity.armsResult == 1 || testingActivity.speechResult == 1 || unknown>=2 || otherSymptoms>=4 || (unknown>=1 && otherSymptoms>2))
+                        if(testingActivity.getFaceResult() == 1 || testingActivity.getArmsResult() == 1 || testingActivity.getSpeechResult() == 1 || unknown>=2 || otherSymptoms>=4 || (unknown>=1 && otherSymptoms>2))
                         {
                             ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC ridicat!");
                             ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Sună IMEDIAT la 112!");
