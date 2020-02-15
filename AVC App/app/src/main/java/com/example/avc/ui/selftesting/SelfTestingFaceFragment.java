@@ -1,11 +1,16 @@
 package com.example.avc.ui.selftesting;
 
 import androidx.camera.core.CameraX;
+import androidx.camera.core.CaptureConfig;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageAnalysisConfig;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureConfig;
 import androidx.camera.core.ImageProxy;
+import androidx.camera.core.OptionsBundle;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
+import androidx.camera.core.UseCase;
 import androidx.camera.core.impl.utils.executor.CameraXExecutors;
 import androidx.constraintlayout.solver.widgets.Analyzer;
 import androidx.core.content.ContextCompat;
@@ -14,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
@@ -23,6 +29,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -35,6 +45,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
@@ -43,6 +54,8 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.Executor;
 
 public class SelfTestingFaceFragment extends Fragment {
 
@@ -112,7 +125,8 @@ public class SelfTestingFaceFragment extends Fragment {
         // If Android Studio complains about "this" being not a LifecycleOwner
         // try rebuilding the project or updating the appcompat dependency to
         // version 1.1.0 or higher.
-//        CameraX.bindToLifecycle(this, preview, analyzerUseCase);
+//        CameraX.bindToLifecycle(this, preview);
+        CameraX.bindToLifecycle(this, analyzerUseCase);
 
         CameraX.bindToLifecycle( this, preview);
     }
@@ -190,13 +204,10 @@ public class SelfTestingFaceFragment extends Fragment {
 
         @Override
         public void analyze(ImageProxy image, int rotationDegrees) {
-//            if (!detectorInitialised){
-//                initDetector();
-//                detectorInitialised = true;
-//            }
-
-            FirebaseVisionImage img = FirebaseVisionImage.fromMediaImage(image.getImage(), rotationDegrees);
-
+//            if (image.getImage().getHardwareBuffer().describeContents())
+//            BitmapFactory.decodeStream()
+//            image.getImage()
+            FirebaseVisionImage img = FirebaseVisionImage.fromMediaImage(Objects.requireNonNull(image.getImage()), degreesToFirebaseRotation(rotationDegrees));
             Task<List<FirebaseVisionFace>> result =
                     detector.detectInImage(img)
                             .addOnSuccessListener(
@@ -204,24 +215,27 @@ public class SelfTestingFaceFragment extends Fragment {
                                         @Override
                                         public void onSuccess(List<FirebaseVisionFace> faces) {
                                             // Task completed successfully
-                                            FirebaseVisionFace face = faces.get(0);
+                                            if (faces.size() > 0){
+                                                FirebaseVisionFace face = faces.get(0);
 
-                                            FirebaseVisionPoint mouthLeft = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT).getPosition();
-                                            FirebaseVisionPoint mouthRight = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT).getPosition();
-                                            FirebaseVisionPoint noseBase = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE).getPosition();
-                                            FirebaseVisionPoint mouthBottom = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE).getPosition();
+                                                FirebaseVisionPoint mouthLeft = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT).getPosition();
+                                                FirebaseVisionPoint mouthRight = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT).getPosition();
+                                                FirebaseVisionPoint noseBase = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE).getPosition();
+                                                FirebaseVisionPoint mouthBottom = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_BOTTOM).getPosition();
 
-                                            double rightAngle = angleBetween(mouthBottom, mouthRight, noseBase);
-                                            double leftAngle = angleBetween(mouthBottom, mouthLeft, noseBase);
+                                                double rightAngle = angleBetween(mouthBottom,noseBase, mouthRight);
+                                                double leftAngle = angleBetween(noseBase, mouthBottom, mouthRight);
 
-                                            smileAttempted = rightAngle <= minimumSmileAngle || leftAngle <= minimumSmileAngle;
-                                            isAvc = Math.abs(rightAngle - leftAngle) >= maxAngleDiff;
+                                                smileAttempted = rightAngle <= minimumSmileAngle || leftAngle <= minimumSmileAngle;
+                                                isAvc = Math.abs(rightAngle - leftAngle) >= maxAngleDiff;
 
-                                            if (smileAttempted && isAvc)
-                                            {
-                                                //todo signal somehow
-                                                return;
+                                                if (smileAttempted && isAvc)
+                                                {
+                                                    //todo signal somehow
+                                                    return;
+                                                }
                                             }
+
                                         }
                                     })
                             .addOnFailureListener(
@@ -230,20 +244,33 @@ public class SelfTestingFaceFragment extends Fragment {
                                         public void onFailure(@NonNull Exception e) {
                                             // Task failed with an exception
                                             // ...
+                                            int a = 0;
+                                            a += 1;
                                         }
                                     });
 
-
-
         }
-
+        private int degreesToFirebaseRotation(int degrees) {
+            switch (degrees) {
+                case 0:
+                    return FirebaseVisionImageMetadata.ROTATION_0;
+                case 90:
+                    return FirebaseVisionImageMetadata.ROTATION_90;
+                case 180:
+                    return FirebaseVisionImageMetadata.ROTATION_180;
+                case 270:
+                    return FirebaseVisionImageMetadata.ROTATION_270;
+                default:
+                    throw new IllegalArgumentException(
+                            "Rotation must be 0, 90, 180, or 270.");
+            }
+        }
         private void initDetector(){
             FirebaseVisionFaceDetectorOptions highAccuracyOpts =
                 new FirebaseVisionFaceDetectorOptions.Builder()
                         .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
                         .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
                         .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
-                        .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
                         .build();
 
             detector = FirebaseVision.getInstance()
