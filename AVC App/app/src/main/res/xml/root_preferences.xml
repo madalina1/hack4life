@@ -11,7 +11,7 @@
             android:summary="Nu este setat"/>
 
         <PreferenceScreen
-            app:key="favoriteContact"
+            app:key="favoriteContactPref"
             app:title="@string/favorite_contact_title"
             android:summary="Nu este setat"/>
 
