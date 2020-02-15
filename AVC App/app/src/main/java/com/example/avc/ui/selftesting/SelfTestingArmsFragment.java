@@ -16,6 +16,7 @@ import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -154,6 +155,13 @@ public class SelfTestingArmsFragment extends Fragment {
         public void analyze(ImageProxy image, int rotationDegrees) {
 
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MediaPlayer faceSound = MediaPlayer.create(getContext(), R.raw.arms);
+        faceSound.start();
     }
 
 }

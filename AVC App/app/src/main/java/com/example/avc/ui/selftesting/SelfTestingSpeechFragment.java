@@ -2,6 +2,7 @@ package com.example.avc.ui.selftesting;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,13 @@ public class SelfTestingSpeechFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(SelfTestingSpeechViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MediaPlayer faceSound = MediaPlayer.create(getContext(), R.raw.speech);
+        faceSound.start();
     }
 
 }

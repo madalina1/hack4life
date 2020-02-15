@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.putString("phoneNum", phoneNum);
                     editor.apply();
                     editor.commit();
-            }
+                }
             }
         }
     }
