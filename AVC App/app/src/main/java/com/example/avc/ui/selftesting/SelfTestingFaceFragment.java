@@ -1,7 +1,5 @@
 package com.example.avc.ui.selftesting;
 
-import androidx.camera.core.AspectRatio;
-import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
@@ -15,14 +13,13 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -41,7 +38,9 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class SelfTestingFaceFragment extends Fragment {
@@ -76,7 +75,6 @@ public class SelfTestingFaceFragment extends Fragment {
             viewFinder.post(this::startCamera);
         }
         viewFinder.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> updateTransform());
-
 
 
         super.onViewCreated(view, savedInstanceState);
@@ -239,6 +237,10 @@ public class SelfTestingFaceFragment extends Fragment {
         }
     }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        MediaPlayer faceSound = MediaPlayer.create(getContext(), R.raw.face);
+        faceSound.start();
+    }
 }

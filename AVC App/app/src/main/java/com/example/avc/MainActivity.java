@@ -126,4 +126,9 @@ public class MainActivity extends AppCompatActivity {
     public void callEmergency(View view) {
 
     }
+
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 }

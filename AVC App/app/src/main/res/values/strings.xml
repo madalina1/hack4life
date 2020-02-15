@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">AVC Test</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_header">Setările aplicației</string>
+
+    <!-- Messages Preferences -->
+    <string name="wakeup_title">Setează o comandă de trezire a aplicației</string>
+    <string name="favorite_contact_title">Adaugă contactul favorit</string>
 </resources>

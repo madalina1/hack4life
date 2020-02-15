@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor"
+    android:backgroundTint="@color/backgroundColor">
+
+    <PreferenceCategory app:title="@string/settings_header">
+
+        <PreferenceScreen
+            app:key="wakeup_key"
+            app:title="@string/wakeup_title"
+            android:summary="Nu este setat"/>
+
+        <PreferenceScreen
+            app:key="favoriteContact"
+            app:title="@string/favorite_contact_title"
+            android:summary="Nu este setat"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

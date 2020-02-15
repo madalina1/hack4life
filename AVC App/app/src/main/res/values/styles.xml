@@ -17,6 +17,12 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="AppTheme.Launcher">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/launch_screen</item>

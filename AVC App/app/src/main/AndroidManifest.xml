@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.avc">
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-feature android:name="android.hardware.GeomagneticField" android:required="true" />
-    <uses-feature android:name="android.hardware.Sensor" android:required="true" />
-    <uses-feature android:name="android.location.Location" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.GeomagneticField"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.Sensor"
+        android:required="true" />
+    <uses-feature
+        android:name="android.location.Location"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -26,17 +35,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBNm-E7ZO5XA7WYNaiW0RA1KUZAEG-XIEE"/>
-        <activity android:name=".OtherTesting" android:theme="@style/TestingLayout" />
-        <activity android:name=".SelfTesting" android:theme="@style/TestingLayout" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBNm-E7ZO5XA7WYNaiW0RA1KUZAEG-XIEE" />
+
+        <activity
+            android:name=".OtherTesting"
+            android:theme="@style/TestingLayout" />
+        <activity
+            android:name=".SelfTesting"
+            android:theme="@style/TestingLayout" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" />
