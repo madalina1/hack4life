@@ -1,5 +1,6 @@
 package com.example.avc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,6 +25,17 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout mConstraintLayout;
     TabLayout tabLayout;
     ViewPager viewPager;
+
+    private static final String[] INITIAL_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.CAMERA,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.SEND_SMS,
+
+    };
+    private static final int INITIAL_REQUEST=1337;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
+        if(!this.allPermissionsGranted()){
+            requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
+        }
     }
 
     public void goToSelfTest(View view) {
@@ -94,5 +111,25 @@ public class MainActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == INITIAL_REQUEST) {
+            if (!this.allPermissionsGranted()) {
+                Toast.makeText(this, "Permisiunile pentru locatie, camera, SMS apel telefonic nu au fost acordate de utilizator.", Toast.LENGTH_SHORT).show();
+                this.finish();
+            }
+        }
+    }
+
+    private boolean allPermissionsGranted(){
+        for (String permission : INITIAL_PERMS) {
+            if (ContextCompat.checkSelfPermission(
+                    this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 }
