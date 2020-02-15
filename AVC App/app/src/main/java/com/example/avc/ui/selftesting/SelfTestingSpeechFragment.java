@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.avc.R;
+import com.example.avc.SelfTesting;
 
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -29,7 +30,9 @@ import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-//import info.debatty.java.stringsimilarity.*;
+import java.util.Collections;
+
+import info.debatty.java.stringsimilarity.*;
 
 public class SelfTestingSpeechFragment extends Fragment implements RecognitionListener {
     private SpeechRecognizer speech = null;
@@ -159,25 +162,41 @@ public class SelfTestingSpeechFragment extends Fragment implements RecognitionLi
         //Log.d(TAG, "onResults"); //$NON-NLS-1$
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
+        String text = "Ana are mere";
+        Levenshtein l = new Levenshtein();
+        ArrayList<Double> arrayList = new ArrayList<Double>();
+
         for (String result : matches) {
-            Toast.makeText(getContext(), result + "\n", Toast.LENGTH_SHORT).show();
-            if(result.toLowerCase().contains("hello")) {
-                Toast.makeText(getContext(), "Bravo", Toast.LENGTH_SHORT).show();
-            }
+//            Toast.makeText(getContext(), result + "\n" + l.distance(result, text), Toast.LENGTH_SHORT).show();
+            arrayList.add((Double) l.distance(result, text));
         }
 
-//        if (match.contains("hello")) {
-//            Toast.makeText(getContext(), match, Toast.LENGTH_SHORT).show();
-//        }
+        int minIndex = arrayList.indexOf(Collections.min(arrayList));
+        Toast.makeText(getContext(), arrayList.get(minIndex).toString(), Toast.LENGTH_SHORT).show();
 
-//        Toast.makeText(getContext(), match, Toast.LENGTH_SHORT).show();
-        // matches are the return values of speech recognition engine
-        // Use these values for whatever you wish to do
+        Double unsureThreshHold = 10.0;
+        Double sureThreshHold = 13.0;
+        short no = -1;
+        short maybe = 0;
+        short yes = 1;
+
+        if(arrayList.get(minIndex) <= unsureThreshHold ){
+            ((SelfTesting) getActivity()).setSpeechResult(no);
+        }
+        else if(arrayList.get(minIndex) < sureThreshHold){
+            ((SelfTesting) getActivity()).setSpeechResult(maybe);
+        }
+        else{
+            ((SelfTesting) getActivity()).setSpeechResult(yes);
+        }
     }
 
     @Override
     public void onRmsChanged(float rmsdB)
     {
+        if(rmsdB<=5.0f){
+            this.onEndOfSpeech();
+        }
     }
 
     public static String getErrorText(int errorCode) {
