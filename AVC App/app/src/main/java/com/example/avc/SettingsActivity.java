@@ -2,6 +2,7 @@ package com.example.avc;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
             String TempNameHolder, TempNumberHolder, TempContactID, IDresult = "" ;
             String phoneNum = "";
             int IDresultHolder ;
+            Preference myPref = (Preference) findPreference("favoriteContact");
 
             if (resultCode == Activity.RESULT_OK && requestCode == 7) {
 
@@ -72,7 +74,11 @@ public class SettingsActivity extends AppCompatActivity {
                             phoneNum = TempNumberHolder;
                         }
                 }
-                Toast.makeText(getActivity().getBaseContext(), "Număr de contact: "+phoneNum, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getBaseContext(), "Număr de contact: "+phoneNum, Toast.LENGTH_LONG).show();
+                    myPref.setSummary("Număr de contact: " + phoneNum);
+                    SharedPreferences.Editor editor = getContext().getSharedPreferences("favoriteContact", MODE_PRIVATE).edit();
+                    editor.putString("phoneNum", phoneNum);
+                    editor.apply();
             }
             }
         }
