@@ -1,34 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/self_testing_time"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
     android:fitsSystemWindows="true"
     tools:context=".ui.selftesting.SelfTestingTimeFragment"
-    android:paddingBottom="40dp"
-    android:paddingTop="40dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timeMessage"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="TimeTestingFragment"
-        />
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/timeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:layout_gravity="bottom|end"
-        android:gravity="center"
-        android:text="NEXT"/>
+        <ImageView
+            android:id="@+id/timeBackgroundGradient"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/time_critical"
+            android:scaleType="centerCrop"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/timeRisk"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/risk"
+                android:layout_marginBottom="24dp"
+                android:scaleX="-1"
+                />
+
+            <TextView
+                android:id="@+id/timeTitleResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="Risc AVC ridicat!"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+                android:textColor="#ffff"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/timeSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Sună IMEDIAT la 112!"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textSize="16sp"
+                android:textColor="#ffff"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:background="@color/backgroundColor">
+
+        <TextView
+            android:id="@+id/lowRiskMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:text="Riscul de AVC este scazut. Considerati sa mergeti la un consult medical in caz ca intampinati alte simptome sau considerati ca nu este in regula."
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textSize="18sp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:visibility="invisible"
+            />
 
 
-</FrameLayout>
+        <Button
+            android:id="@+id/emergencyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/gradient_high_risk_button"
+            android:textColor="#ffff"
+            android:text="Sună la 112"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="16sp"
+            android:onClick="callEmergency"
+
+            />
+
+        <TextView
+            android:id="@+id/timeMapMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_above="@+id/timeMapView"
+            android:layout_marginBottom="20dp"
+            android:layout_centerInParent="true"
+            android:text="Localizarea celui mai apropiat spital"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textSize="16sp"
+            />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/timeMapView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

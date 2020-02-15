@@ -216,7 +216,7 @@ public class OtherTestingTimeFragment extends Fragment {
         //Severe cases
         if(testingActivity.faceResult == 1 || testingActivity.armsResult == 1 || testingActivity.speechResult == 1 || unknown>=2 || otherSymptoms>=4 || (unknown>=1 && otherSymptoms>2))
         {
-            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc ridicat!");
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC ridicat!");
             ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Sună IMEDIAT la 112!");
             ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.risk));
             ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_critical));
@@ -224,7 +224,7 @@ public class OtherTestingTimeFragment extends Fragment {
             ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_high_risk_button));
         }//Medium cases
         else if(unknown==1 || otherSymptoms>=2){
-            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc mediu!");
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC mediu!");
             ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Considerati să sunați la 112");
             ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.risk));
             ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_medium));
@@ -232,7 +232,7 @@ public class OtherTestingTimeFragment extends Fragment {
             ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_medium_risk_button));
         }//Low cases
         else{
-            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc scazut!");
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC scazut!");
             ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Considerați un control medical");
             ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.right));
             ((ImageView)rootView.findViewById(R.id.timeRisk)).setScaleX(1.0f);
