@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.CAMERA,
             Manifest.permission.CALL_PHONE,
             Manifest.permission.SEND_SMS,
-
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
     };
     private static final int INITIAL_REQUEST=1337;
 

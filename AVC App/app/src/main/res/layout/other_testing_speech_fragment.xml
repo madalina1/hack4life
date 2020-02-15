@@ -103,7 +103,7 @@
         android:textColor="@color/buttonDeactivatedColor"
         android:text="Pasul următor"
         android:textSize="16sp"
-        android:onClick="goToOtherTestingSymptoms"
+        android:onClick="goToOtherTestingTime"
         android:enabled="false"/>
 
 

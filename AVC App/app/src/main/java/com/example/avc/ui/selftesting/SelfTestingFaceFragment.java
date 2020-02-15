@@ -2,9 +2,12 @@ package com.example.avc.ui.selftesting;
 
 import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageAnalysisConfig;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
+import androidx.camera.core.impl.utils.executor.CameraXExecutors;
+import androidx.constraintlayout.solver.widgets.Analyzer;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -40,8 +43,6 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class SelfTestingFaceFragment extends Fragment {
 
@@ -50,6 +51,8 @@ public class SelfTestingFaceFragment extends Fragment {
 
     private TextureView  viewFinder;
     private int rotation = 0;
+    Preview preview;
+    ImageAnalysis analyzerUseCase;
 
     public static SelfTestingFaceFragment newInstance() {
         return new SelfTestingFaceFragment();
@@ -80,10 +83,11 @@ public class SelfTestingFaceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @SuppressLint("RestrictedApi")
     private void startCamera() {
 //        Rational rational = new Rational(1,1);
         @SuppressLint("RestrictedApi") PreviewConfig previewConfig = new PreviewConfig.Builder().setLensFacing(CameraX.LensFacing.FRONT).build();
-        Preview preview = new Preview(previewConfig);
+        preview = new Preview(previewConfig);
 
         preview.setOnPreviewOutputUpdateListener(output -> {
             ViewGroup parent = (ViewGroup) viewFinder.getParent();
@@ -94,6 +98,21 @@ public class SelfTestingFaceFragment extends Fragment {
 
             updateTransform();
         });
+
+        // Setup image analysis pipeline that computes average pixel luminance
+        ImageAnalysisConfig analyzerConfig = new ImageAnalysisConfig.Builder().setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE).setImageQueueDepth(20).build();
+
+        // Build the image analysis use case and instantiate our analyzer
+        analyzerUseCase = new ImageAnalysis(analyzerConfig);
+
+        analyzerUseCase.setAnalyzer(CameraXExecutors.highPriorityExecutor(),new SmilingSymmetryAnalyzer());
+
+
+        // Bind use cases to lifecycle
+        // If Android Studio complains about "this" being not a LifecycleOwner
+        // try rebuilding the project or updating the appcompat dependency to
+        // version 1.1.0 or higher.
+//        CameraX.bindToLifecycle(this, preview, analyzerUseCase);
 
         CameraX.bindToLifecycle( this, preview);
     }
@@ -164,17 +183,19 @@ public class SelfTestingFaceFragment extends Fragment {
         double minimumSmileAngle = 60.0;
         double maxAngleDiff = 20.0;
 
+        public SmilingSymmetryAnalyzer(){
+            initDetector();
+            detectorInitialised = true;
+        }
 
         @Override
         public void analyze(ImageProxy image, int rotationDegrees) {
-            if (!detectorInitialised){
-                initDetector();
-                detectorInitialised = true;
-            }
+//            if (!detectorInitialised){
+//                initDetector();
+//                detectorInitialised = true;
+//            }
 
-
-            FirebaseVisionImage img =
-                    FirebaseVisionImage.fromMediaImage(image.getImage(), rotationDegrees);
+            FirebaseVisionImage img = FirebaseVisionImage.fromMediaImage(image.getImage(), rotationDegrees);
 
             Task<List<FirebaseVisionFace>> result =
                     detector.detectInImage(img)

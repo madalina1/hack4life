@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Trace;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +23,15 @@ import static com.example.avc.MainActivity.setWindowFlag;
 
 public class OtherTesting extends AppCompatActivity {
     private Boolean backPressed;
+    public short faceResult=-1;
+    public short armsResult=-1;
+    public short speechResult=-1;
+    public boolean faceNumbness=false;
+    public boolean headache=false;
+    public boolean puking=false;
+    public boolean balance=false;
+    public boolean vision=false;
+    public boolean confusion=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +70,23 @@ public class OtherTesting extends AppCompatActivity {
     }
 
     public void goToOtherTestingTime(View view) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingTimeFragment.newInstance()).commitNow();
+        if(view.getId() == R.id.otherSymptomsButton)
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingTimeFragment.newInstance()).commitNow();
+        else{
+            short unknown = 0;
+            if(this.faceResult == 0)
+                unknown++;
+            if(this.armsResult== 0)
+                unknown++;
+            if(this.speechResult== 0)
+                unknown++;
+            if(this.faceResult == 1 || this.armsResult == 1 || this.speechResult ==1 || unknown>=2){
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingTimeFragment.newInstance()).commitNow();
+            }
+            else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingSymptomsFragment.newInstance()).commitNow();
+            }
+        }
     }
 
     public void goToOtherTestingSymptoms(View view) {
@@ -77,12 +103,15 @@ public class OtherTesting extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_face_yes:
                 if (checked)
+                    this.faceResult = 1;
                     break;
             case R.id.radio_face_no:
                 if (checked)
+                    this.faceResult = -1;
                     break;
             case R.id.radio_face_idk:
                 if (checked)
+                    this.faceResult = 0;
                     break;
         }
     }
@@ -98,12 +127,15 @@ public class OtherTesting extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_arms_yes:
                 if (checked)
+                    this.armsResult = 1;
                     break;
             case R.id.radio_arms_no:
                 if (checked)
+                    this.armsResult = -1;
                     break;
             case R.id.radio_arms_idk:
                 if (checked)
+                    this.armsResult = 0;
                     break;
         }
     }
@@ -118,12 +150,15 @@ public class OtherTesting extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_speech_yes:
                 if (checked)
+                    this.speechResult = 1;
                     break;
             case R.id.radio_speech_no:
                 if (checked)
+                    this.speechResult = -1;
                     break;
             case R.id.radio_speech_idk:
                 if (checked)
+                    this.speechResult = 0;
                     break;
         }
     }
@@ -134,16 +169,40 @@ public class OtherTesting extends AppCompatActivity {
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.checkbox_symptoms_face:
+                if(checked)
+                    this.faceNumbness = true;
+                else
+                    this.faceNumbness = false;
                 break;
             case R.id.checkbox_symptoms_headache:
+                if(checked)
+                    this.headache = true;
+                else
+                    this.headache = false;
                 break;
             case R.id.checkbox_symptoms_equilibrium:
+                if(checked)
+                    this.balance = true;
+                else
+                    this.balance = false;
                 break;
             case R.id.checkbox_symptoms_eyes:
+                if(checked)
+                    this.vision = true;
+                else
+                    this.vision = false;
                 break;
             case R.id.checkbox_symptoms_speech:
+                if(checked)
+                    this.confusion = true;
+                else
+                    this.confusion = false;
                 break;
             case R.id.checkbox_symptoms_vomit:
+                if(checked)
+                    this.puking = true;
+                else
+                    this.puking = false;
                 break;
         }
     }
