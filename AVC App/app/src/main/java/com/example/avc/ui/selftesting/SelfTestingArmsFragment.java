@@ -23,24 +23,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.avc.R;
+import com.example.avc.SelfTesting;
+
+import static com.google.common.primitives.Floats.max;
+import static java.lang.StrictMath.abs;
 
 public class SelfTestingArmsFragment extends Fragment {
 
     private SelfTestingArmsViewModel mViewModel;
     private int REQUEST_CODE_PERMISSIONS = 42;
 
-    private TextureView viewFinder;
-    private int rotation = 0;
 
     private SensorManager sensorManager;
     private Sensor sensor;
+    private float leftPressure=0.0f;
+    private float rightPressure=0.0f;
+    private float maxDifference=0.0f;
 
     public static SelfTestingArmsFragment newInstance() {
         return new SelfTestingArmsFragment();
@@ -50,13 +58,24 @@ public class SelfTestingArmsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.self_testing_arms_fragment, container, false);
+
+        View rootView = inflater.inflate(R.layout.self_testing_arms_fragment, container, false);
+
+        rootView.findViewById(R.id.push_button_left).setOnTouchListener((v, event) -> {
+            leftPressure = event.getPressure();
+            return false;
+        });
+
+        rootView.findViewById(R.id.push_button_right).setOnTouchListener((v, event) -> {
+            rightPressure = event.getPressure();
+            return false;
+        });
+
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewFinder = getView().findViewById(R.id.self_arms_view_finder);
-
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
@@ -86,6 +105,44 @@ public class SelfTestingArmsFragment extends Fragment {
         super.onStart();
         MediaPlayer faceSound = MediaPlayer.create(getContext(), R.raw.arms);
         faceSound.start();
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+        }, 4000);
+
+
+        float lowThreshHold = 0.2f;
+
+        float unsureThreshHold = 0.2f;
+        float sureThreshHold = 5.0f;
+
+
+
+        new CountDownTimer(6000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                maxDifference = max(maxDifference, abs(leftPressure - rightPressure));
+            }
+
+            public void onFinish() {
+                short no = -1;
+                short maybe = 0;
+                short yes = 1;
+
+                if(maxDifference <= unsureThreshHold ){
+                    ((SelfTesting) getActivity()).setArmsResult(no);
+                }
+                else if(maxDifference < sureThreshHold){
+                    ((SelfTesting) getActivity()).setArmsResult(maybe);
+                }
+                else{
+                    ((SelfTesting) getActivity()).setArmsResult(yes);
+                }
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingSpeechFragment.newInstance()).commitNow();
+            }
+        }.start();
     }
 
 }
