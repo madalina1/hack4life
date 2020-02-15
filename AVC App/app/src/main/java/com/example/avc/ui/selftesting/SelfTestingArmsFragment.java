@@ -32,7 +32,7 @@ import com.example.avc.R;
 
 public class SelfTestingArmsFragment extends Fragment {
 
-    private SelfTestingFaceViewModel mViewModel;
+    private SelfTestingArmsViewModel mViewModel;
     private int REQUEST_CODE_PERMISSIONS = 42;
 
     private TextureView viewFinder;
@@ -49,12 +49,12 @@ public class SelfTestingArmsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.self_testing_face_fragment, container, false);
+        return inflater.inflate(R.layout.self_testing_arms_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewFinder = getView().findViewById(R.id.self_face_view_finder);
+        viewFinder = getView().findViewById(R.id.self_arms_view_finder);
         System.out.println(viewFinder);
 
         if (ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
@@ -129,7 +129,7 @@ public class SelfTestingArmsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SelfTestingFaceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(SelfTestingArmsViewModel.class);
         // TODO: Use the ViewModel
     }
 

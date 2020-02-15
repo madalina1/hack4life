@@ -16,11 +16,10 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.example.avc.ui.othertesting.OtherTestingSymptomsFragment;
-import com.example.avc.ui.othertesting.OtherTestingTimeFragment;
 import com.example.avc.ui.selftesting.SelfTestingArmsFragment;
 import com.example.avc.ui.selftesting.SelfTestingFaceFragment;
 import com.example.avc.ui.selftesting.SelfTestingSpeechFragment;
+import com.example.avc.ui.selftesting.SelfTestingSymptomsFragment;
 import com.example.avc.ui.selftesting.SelfTestingTimeFragment;
 
 import static com.example.avc.MainActivity.setWindowFlag;
@@ -76,8 +75,8 @@ public class SelfTesting extends AppCompatActivity {
     }
 
     public void goToSelfTestingTime(View view) {
-        if(view.getId() == R.id.otherSymptomsButton)
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingTimeFragment.newInstance()).commitNow();
+        if(view.getId() == R.id.selfSymptomsButton)
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
         else{
             short unknown = 0;
             if(this.faceResult == 0)
@@ -87,10 +86,10 @@ public class SelfTesting extends AppCompatActivity {
             if(this.speechResult== 0)
                 unknown++;
             if(this.faceResult == 1 || this.armsResult == 1 || this.speechResult ==1 || unknown>=2){
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingTimeFragment.newInstance()).commitNow();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
             }
             else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, OtherTestingSymptomsFragment.newInstance()).commitNow();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingSymptomsFragment.newInstance()).commitNow();
             }
         }
     }
