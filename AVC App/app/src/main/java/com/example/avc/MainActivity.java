@@ -95,4 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
+
+    public void callEmergency(View view) {
+    }
 }

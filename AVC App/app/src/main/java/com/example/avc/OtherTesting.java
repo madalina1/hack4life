@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -124,6 +125,26 @@ public class OtherTesting extends AppCompatActivity {
             case R.id.radio_speech_idk:
                 if (checked)
                     break;
+        }
+    }
+
+    public void onOtherTestingCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_symptoms_face:
+                break;
+            case R.id.checkbox_symptoms_headache:
+                break;
+            case R.id.checkbox_symptoms_equilibrium:
+                break;
+            case R.id.checkbox_symptoms_eyes:
+                break;
+            case R.id.checkbox_symptoms_speech:
+                break;
+            case R.id.checkbox_symptoms_vomit:
+                break;
         }
     }
 }
