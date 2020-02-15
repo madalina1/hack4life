@@ -32,9 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            if(getContext().getSharedPreferences("favoriteContactPref", MODE_PRIVATE).getString("favoritphoneNumeContact","").equals("")){
-                setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            }
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
             myPref = (Preference) findPreference("favoriteContactPref");
 
             myPref.setSummary("Număr de contact: " + getContext().getSharedPreferences("favoriteContactPref", MODE_PRIVATE).getString("phoneNum","Nu este setat"));

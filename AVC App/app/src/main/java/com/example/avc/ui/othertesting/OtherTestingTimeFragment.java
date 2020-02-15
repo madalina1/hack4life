@@ -1,14 +1,23 @@
 package com.example.avc.ui.othertesting;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.util.Calendar;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +32,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.avc.MainActivity;
 import com.example.avc.OtherTesting;
 import com.example.avc.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -53,9 +63,11 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class OtherTestingTimeFragment extends Fragment {
 
@@ -222,6 +234,49 @@ public class OtherTestingTimeFragment extends Fragment {
             ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_critical));
             ((TextView)rootView.findViewById(R.id.lowRiskMessage)).setVisibility(View.INVISIBLE);
             ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_high_risk_button));
+
+
+            Date currentTime = Calendar.getInstance().getTime();
+            DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(getContext());
+            String dateString = dateFormat.format(currentTime);
+
+            NotificationManager mNotificationManager;
+            Context mContext = getContext();
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(mContext.getApplicationContext(), "notify_001");
+            Intent ii = new Intent(mContext.getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, ii, 0);
+
+            NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+
+            bigText.bigText("Momentul aparitiei simptomelor: "+dateString);
+            bigText.setBigContentTitle("Simptome AVC detectate!");
+            bigText.setSummaryText("Test AVC");
+
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+            mBuilder.setContentTitle("AVC Test");
+            mBuilder.setContentText("Simptome AVC detectate!");
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setStyle(bigText);
+            mBuilder.setOngoing(true);
+
+            mNotificationManager =
+                    (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                String channelId = "Your_channel_id";
+                NotificationChannel channel = new NotificationChannel(
+                        channelId,
+                        "AVC Test",
+                        NotificationManager.IMPORTANCE_HIGH);
+                mNotificationManager.createNotificationChannel(channel);
+                mBuilder.setChannelId(channelId);
+            }
+
+            mNotificationManager.notify(0, mBuilder.build());
+
         }//Medium cases
         else if(unknown==1 || otherSymptoms>=2){
             ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC mediu!");
@@ -230,6 +285,48 @@ public class OtherTestingTimeFragment extends Fragment {
             ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_medium));
             ((TextView)rootView.findViewById(R.id.lowRiskMessage)).setVisibility(View.INVISIBLE);
             ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_medium_risk_button));
+
+
+            Date currentTime = Calendar.getInstance().getTime();
+            DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(getContext());
+            String dateString = dateFormat.format(currentTime);
+
+            NotificationManager mNotificationManager;
+            Context mContext = getContext();
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(mContext.getApplicationContext(), "notify_001");
+            Intent ii = new Intent(mContext.getApplicationContext(), MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, ii, 0);
+
+            NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+
+            bigText.bigText("Momentul aparitiei simptomelor: "+dateString);
+            bigText.setBigContentTitle("Simptome AVC detectate!");
+            bigText.setSummaryText("Test AVC");
+
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+            mBuilder.setContentTitle("AVC Test");
+            mBuilder.setContentText("Simptome AVC detectate!");
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setStyle(bigText);
+            mBuilder.setOngoing(true);
+
+            mNotificationManager =
+                    (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            {
+                String channelId = "Your_channel_id";
+                NotificationChannel channel = new NotificationChannel(
+                        channelId,
+                        "AVC Test",
+                        NotificationManager.IMPORTANCE_HIGH);
+                mNotificationManager.createNotificationChannel(channel);
+                mBuilder.setChannelId(channelId);
+            }
+
+            mNotificationManager.notify(0, mBuilder.build());
         }//Low cases
         else{
             ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc AVC scazut!");
