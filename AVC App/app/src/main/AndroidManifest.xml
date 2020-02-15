@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
+
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBNm-E7ZO5XA7WYNaiW0RA1KUZAEG-XIEE"/>
         <activity android:name=".OtherTesting" android:theme="@style/TestingLayout" />
         <activity android:name=".SelfTesting" android:theme="@style/TestingLayout" />

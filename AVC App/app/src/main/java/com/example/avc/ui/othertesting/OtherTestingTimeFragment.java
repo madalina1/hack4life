@@ -18,7 +18,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.avc.OtherTesting;
 import com.example.avc.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -48,6 +54,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class OtherTestingTimeFragment extends Fragment {
 
@@ -80,7 +88,6 @@ public class OtherTestingTimeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.other_testing_time_fragment, container, false);
         mMapView = rootView.findViewById(R.id.timeMapView);
         mMapView.onCreate(savedInstanceState);
-
         options.infoWindowAnchor(0.0f,0.0f);
 
 
@@ -127,59 +134,113 @@ public class OtherTestingTimeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        mMapView.getMapAsync(mMap -> {
+            googleMap = mMap;
+            // For showing a move to my location button
+            googleMap.setMyLocationEnabled(true);
+            googleMap.getUiSettings().setScrollGesturesEnabled(false);
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                // For showing a move to my location button
-                googleMap.setMyLocationEnabled(true);
-
-                for (Pair<LatLng,String> pair : latlngs) {
-                    options.position(pair.first);
-                    options.title(pair.second);
-                    options.snippet("Institut capabil de tratare AVC");
-                    googleMap.addMarker(options);
-                }
-
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            Location mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-
-                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                                for (Pair<LatLng,String> marker : latlngs) {
-                                    builder.include(marker.first);
-                                }
-                                builder.include(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                                LatLngBounds bounds = builder.build();
-                                int padding = 80; // offset from edges of the map in pixels
-
-
-                                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mLastKnownLocation.getLatitude(),
-                                        mLastKnownLocation.getLongitude())).zoom(14).build();
-                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
-
-                                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                                    @Override
-                                    public void onInfoWindowClick(Marker marker) {
-//                                        Uri gmmIntentUri = Uri.parse("google.navigation:q="+marker.getPosition().latitude+","+marker.getPosition().longitude);
-                                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+marker.getPosition().latitude+","+marker.getPosition().longitude+"("+ marker.getTitle()+")");
-                                        Intent intent = new Intent(Intent.ACTION_VIEW,gmmIntentUri);
-                                        intent.setPackage("com.google.android.apps.maps");
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
+            for (Pair<LatLng,String> pair : latlngs) {
+                options.position(pair.first);
+                options.title(pair.second);
+                options.snippet("Institut capabil de tratare AVC");
+                googleMap.addMarker(options);
             }
+
+            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(getActivity(), task -> {
+                if (task.isSuccessful()) {
+                    Location mLastKnownLocation = task.getResult();
+                    if (mLastKnownLocation != null) {
+
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        for (Pair<LatLng,String> marker : latlngs) {
+                            builder.include(marker.first);
+                        }
+                        builder.include(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                        LatLngBounds bounds = builder.build();
+                        int padding = 100; // offset from edges of the map in pixels
+
+
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(mLastKnownLocation.getLatitude(),
+                                mLastKnownLocation.getLongitude())).zoom(14).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
+
+                        googleMap.setOnMapClickListener(latLng -> {
+                            Collections.sort(latlngs, (a, b) -> {
+                                Location locationA = new Location("point A");
+                                locationA.setLatitude(a.first.latitude);
+                                locationA.setLongitude(a.first.longitude);
+                                Location locationB = new Location("point B");
+                                locationB.setLatitude(b.first.latitude);
+                                locationB.setLongitude(b.first.longitude);
+                                float distanceOne = mLastKnownLocation.distanceTo(locationA);
+                                float distanceTwo = mLastKnownLocation.distanceTo(locationB);
+                                return Float.compare(distanceOne, distanceTwo);
+                            });
+                            Pair<LatLng,String> closest = latlngs.get(0);
+                            Uri gmmIntentUri = Uri.parse("geo:0,0?q="+closest.first.latitude+","+closest.first.longitude+"("+ closest.second+")");
+                            Intent intent = new Intent(Intent.ACTION_VIEW,gmmIntentUri);
+                            intent.setPackage("com.google.android.apps.maps");
+                            startActivity(intent);
+                        });
+                    }
+                }
+            });
         });
+
+        OtherTesting testingActivity = (OtherTesting) getActivity();
+        short otherSymptoms = 0;
+        if(testingActivity.faceNumbness)
+            otherSymptoms++;
+        if(testingActivity.headache)
+            otherSymptoms++;
+        if(testingActivity.puking)
+            otherSymptoms++;
+        if(testingActivity.balance)
+            otherSymptoms++;
+        if(testingActivity.vision)
+            otherSymptoms++;
+        if(testingActivity.confusion)
+            otherSymptoms++;
+
+        short unknown = 0;
+        if(testingActivity.faceResult == 0)
+            unknown++;
+        if(testingActivity.armsResult== 0)
+            unknown++;
+        if(testingActivity.speechResult== 0)
+            unknown++;
+
+        //Severe cases
+        if(testingActivity.faceResult == 1 || testingActivity.armsResult == 1 || testingActivity.speechResult == 1 || unknown>=2 || otherSymptoms>=4 || (unknown>=1 && otherSymptoms>2))
+        {
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc ridicat!");
+            ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Sună IMEDIAT la 112!");
+            ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.risk));
+            ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_critical));
+            ((TextView)rootView.findViewById(R.id.lowRiskMessage)).setVisibility(View.INVISIBLE);
+            ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_high_risk_button));
+        }//Medium cases
+        else if(unknown==1 || otherSymptoms>=2){
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc mediu!");
+            ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Considerati să sunați la 112");
+            ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.risk));
+            ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_medium));
+            ((TextView)rootView.findViewById(R.id.lowRiskMessage)).setVisibility(View.INVISIBLE);
+            ((Button)rootView.findViewById(R.id.emergencyButton)).setBackground(getContext().getDrawable(R.drawable.gradient_medium_risk_button));
+        }//Low cases
+        else{
+            ((TextView)rootView.findViewById(R.id.timeTitleResult)).setText("Risc scazut!");
+            ((TextView)rootView.findViewById(R.id.timeSubtitle)).setText("Considerați un control medical");
+            ((ImageView)rootView.findViewById(R.id.timeRisk)).setImageDrawable(getContext().getDrawable(R.drawable.right));
+            ((ImageView)rootView.findViewById(R.id.timeRisk)).setScaleX(1.0f);
+            ((ImageView)rootView.findViewById(R.id.timeBackgroundGradient)).setImageDrawable(getContext().getDrawable(R.drawable.time_low));
+            ((TextView)rootView.findViewById(R.id.lowRiskMessage)).setVisibility(View.VISIBLE);
+            Button btn = ((Button)rootView.findViewById(R.id.emergencyButton));
+            ((ViewManager)btn.getParent()).removeView(btn);
+        }
 
         return rootView;
     }
