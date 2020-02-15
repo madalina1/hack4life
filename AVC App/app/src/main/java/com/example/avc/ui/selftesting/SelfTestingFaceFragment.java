@@ -30,7 +30,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.avc.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SelfTestingFaceFragment extends Fragment {
@@ -148,11 +159,86 @@ public class SelfTestingFaceFragment extends Fragment {
 
     private class SmilingSymmetryAnalyzer implements ImageAnalysis.Analyzer {
         private long lastAnalyzedTimestamp = 0L;
+        private FirebaseVisionFaceDetector detector;
+        private Boolean detectorInitialised = false;
+        private Boolean isAvc = false;
+        private Boolean smileAttempted = false;
+        double minimumSmileAngle = 60.0;
+        double maxAngleDiff = 20.0;
+
 
         @Override
         public void analyze(ImageProxy image, int rotationDegrees) {
+            if (!detectorInitialised){
+                initDetector();
+                detectorInitialised = true;
+            }
+
+
+            FirebaseVisionImage img =
+                    FirebaseVisionImage.fromMediaImage(image.getImage(), rotationDegrees);
+
+            Task<List<FirebaseVisionFace>> result =
+                    detector.detectInImage(img)
+                            .addOnSuccessListener(
+                                    new OnSuccessListener<List<FirebaseVisionFace>>() {
+                                        @Override
+                                        public void onSuccess(List<FirebaseVisionFace> faces) {
+                                            // Task completed successfully
+                                            FirebaseVisionFace face = faces.get(0);
+
+                                            FirebaseVisionPoint mouthLeft = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT).getPosition();
+                                            FirebaseVisionPoint mouthRight = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT).getPosition();
+                                            FirebaseVisionPoint noseBase = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE).getPosition();
+                                            FirebaseVisionPoint mouthBottom = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE).getPosition();
+
+                                            double rightAngle = angleBetween(mouthBottom, mouthRight, noseBase);
+                                            double leftAngle = angleBetween(mouthBottom, mouthLeft, noseBase);
+
+                                            smileAttempted = rightAngle <= 60.0 || leftAngle <= 60.0;
+                                            isAvc = Math.abs(rightAngle - leftAngle) >= maxAngleDiff;
+
+                                            if (smileAttempted && isAvc)
+                                            {
+                                                //todo signal somehow
+                                                return;
+                                            }
+                                        }
+                                    })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Task failed with an exception
+                                            // ...
+                                        }
+                                    });
+
+
 
         }
+
+        private void initDetector(){
+            FirebaseVisionFaceDetectorOptions highAccuracyOpts =
+                new FirebaseVisionFaceDetectorOptions.Builder()
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                        .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                        .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+                        .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                        .build();
+
+            detector = FirebaseVision.getInstance()
+                .getVisionFaceDetector(highAccuracyOpts);
+
+        }
+
+        private double angleBetween(FirebaseVisionPoint p0, FirebaseVisionPoint p1, FirebaseVisionPoint p2) {
+            //angle between [p0 p1] and [p0 p2]
+            return Math.toDegrees(Math.atan2(p1.getX() - p0.getX(),p1.getY() - p0.getY())-
+                    Math.atan2(p2.getX()- p0.getX(),p2.getY()- p0.getY()));
+        }
     }
+
+
 
 }
