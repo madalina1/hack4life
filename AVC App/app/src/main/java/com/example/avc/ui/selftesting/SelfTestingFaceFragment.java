@@ -195,7 +195,7 @@ public class SelfTestingFaceFragment extends Fragment {
                                             double rightAngle = angleBetween(mouthBottom, mouthRight, noseBase);
                                             double leftAngle = angleBetween(mouthBottom, mouthLeft, noseBase);
 
-                                            smileAttempted = rightAngle <= 60.0 || leftAngle <= 60.0;
+                                            smileAttempted = rightAngle <= minimumSmileAngle || leftAngle <= minimumSmileAngle;
                                             isAvc = Math.abs(rightAngle - leftAngle) >= maxAngleDiff;
 
                                             if (smileAttempted && isAvc)
