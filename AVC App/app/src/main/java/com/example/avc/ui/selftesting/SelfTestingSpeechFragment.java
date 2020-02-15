@@ -87,7 +87,7 @@ public class SelfTestingSpeechFragment extends Fragment implements RecognitionLi
                 listen();
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_PERMISSION);
             }
-        }, 2100);
+        }, 5000);
     }
 
     @Override
@@ -189,6 +189,8 @@ public class SelfTestingSpeechFragment extends Fragment implements RecognitionLi
         else{
             ((SelfTesting) getActivity()).setSpeechResult(yes);
         }
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, SelfTestingTimeFragment.newInstance()).commitNow();
     }
 
     @Override

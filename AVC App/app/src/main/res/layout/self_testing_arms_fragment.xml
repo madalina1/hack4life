@@ -53,23 +53,5 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/otherSpeechButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:enabled="false"
-        android:gravity="center"
-        android:onClick="goToSelfTestingSpeech"
-        android:text="Pasul următor"
-        android:textColor="@color/buttonDeactivatedColor"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

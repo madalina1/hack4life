@@ -23,9 +23,9 @@ import static com.example.avc.MainActivity.setWindowFlag;
 public class SelfTesting extends AppCompatActivity {
     private Boolean backPressed;
 
-    private short faceResult=-1;
-    private short armsResult=-1;
-    private short speechResult=-1;
+    private short faceResult=1;
+    private short armsResult=1;
+    private short speechResult=1;
     public boolean faceNumbness=false;
     public boolean headache=false;
     public boolean puking=false;

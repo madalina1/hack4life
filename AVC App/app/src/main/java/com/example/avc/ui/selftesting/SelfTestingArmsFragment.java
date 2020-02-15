@@ -109,17 +109,16 @@ public class SelfTestingArmsFragment extends Fragment {
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-        }, 4000);
-
-
-        float lowThreshHold = 0.2f;
-
-        float unsureThreshHold = 0.2f;
-        float sureThreshHold = 5.0f;
+        }, 8000);
 
 
 
-        new CountDownTimer(6000, 1000) {
+        float unsureThreshHold = 0.5f;
+        float sureThreshHold = 0.8f;
+
+
+
+        new CountDownTimer(7000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 maxDifference = max(maxDifference, abs(leftPressure - rightPressure));

@@ -22,19 +22,6 @@
         android:text="Incercati sa spuneti 'Ana are mere', imediat dupa semnalul sonor. "
         />
 
-    <Button
-        android:id="@+id/selfSpeechButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:layout_gravity="bottom|end"
-        android:gravity="center"
-        android:background="?android:attr/selectableItemBackground"
-        android:textColor="@color/buttonDeactivatedColor"
-        android:text="Pasul următor"
-        android:textSize="16sp"
-        android:onClick="goToSelfTestingTime"
-        android:enabled="false"/>
 
 
 </FrameLayout>
