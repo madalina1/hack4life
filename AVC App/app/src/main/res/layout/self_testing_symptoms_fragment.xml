@@ -9,26 +9,132 @@
     tools:context=".ui.selftesting.SelfTestingSymptomsFragment"
     android:paddingBottom="40dp"
     android:paddingTop="40dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp">
 
-    <TextView
-        android:id="@+id/symptomsMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="SymptomsTestingFragment"
-        />
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/symptoms" />
+
+        <TextView
+            android:id="@+id/symptomsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Alte simptome AVC"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginBottom="15dp"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox android:id="@+id/checkbox_symptoms_face"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amorțeala sau slăbiciunea feței"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+                <CheckBox android:id="@+id/checkbox_symptoms_headache"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Durere de cap severă"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+                <CheckBox android:id="@+id/checkbox_symptoms_vomit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Greață, vărsături"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+                <CheckBox android:id="@+id/checkbox_symptoms_equilibrium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tulburări de echilibru"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+                <CheckBox android:id="@+id/checkbox_symptoms_eyes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tulburare de vedere"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+                <CheckBox android:id="@+id/checkbox_symptoms_speech"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confuzie, dificultate de vorbire"
+                    android:onClick="onSelfTestingCheckboxClicked"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:textSize="16sp"
+                    android:textColor="@color/radioColor"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:buttonTint="@color/radioColor"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/symptomsButton"
+        android:id="@+id/selfSymptomsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:layout_gravity="bottom|end"
         android:gravity="center"
-        android:text="NEXT"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/buttonColor"
+        android:text="Pasul următor"
+        android:textSize="16sp"
         android:onClick="goToSelfTestingTime"/>
+
 
 </FrameLayout>

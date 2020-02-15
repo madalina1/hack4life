@@ -2,7 +2,9 @@ package com.example.avc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Trace;
@@ -205,5 +207,11 @@ public class OtherTesting extends AppCompatActivity {
                     this.puking = false;
                 break;
         }
+    }
+
+    public void callEmergency(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:112112"));
+        startActivity(intent);
     }
 }
