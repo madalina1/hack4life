@@ -1,7 +1,6 @@
 package com.example.avc;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -113,15 +112,6 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == INITIAL_REQUEST) {
-            if (!this.allPermissionsGranted()) {
-                Toast.makeText(this, "Permisiunile pentru locatie, camera, SMS apel telefonic nu au fost acordate de utilizator.", Toast.LENGTH_SHORT).show();
-                this.finish();
-            }
-        }
-    }
 
     private boolean allPermissionsGranted(){
         for (String permission : INITIAL_PERMS) {
@@ -131,5 +121,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    public void callEmergency(View view) {
+
     }
 }

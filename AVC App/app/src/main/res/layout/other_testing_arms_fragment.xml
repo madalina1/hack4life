@@ -21,11 +21,11 @@
 
                 <ImageView
                     android:layout_width="300dp"
-                    android:layout_height="177dp"
+                    android:layout_height="199dp"
                     android:layout_gravity="center|top"
                     android:layout_marginBottom="40dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/arms_weakness" />
+                    android:src="@drawable/arms" />
 
                 <TextView
                     android:id="@+id/armsTitle"
