@@ -4,9 +4,12 @@ import androidx.camera.core.AspectRatio;
 import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageAnalysisConfig;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
+import androidx.camera.core.impl.utils.executor.CameraXExecutors;
+import androidx.constraintlayout.solver.widgets.Analyzer;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -42,6 +45,8 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SelfTestingFaceFragment extends Fragment {
@@ -82,6 +87,7 @@ public class SelfTestingFaceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @SuppressLint("RestrictedApi")
     private void startCamera() {
 //        Rational rational = new Rational(1,1);
         @SuppressLint("RestrictedApi") PreviewConfig previewConfig = new PreviewConfig.Builder().setLensFacing(CameraX.LensFacing.FRONT).build();
@@ -97,7 +103,21 @@ public class SelfTestingFaceFragment extends Fragment {
             updateTransform();
         });
 
-        CameraX.bindToLifecycle( this, preview);
+        // Setup image analysis pipeline that computes average pixel luminance
+        ImageAnalysisConfig analyzerConfig = new ImageAnalysisConfig.Builder().setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE).build();
+
+        // Build the image analysis use case and instantiate our analyzer
+        ImageAnalysis analyzerUseCase = new ImageAnalysis(analyzerConfig);
+        analyzerUseCase.setAnalyzer(CameraXExecutors.highPriorityExecutor(),new SmilingSymmetryAnalyzer());
+
+
+        // Bind use cases to lifecycle
+        // If Android Studio complains about "this" being not a LifecycleOwner
+        // try rebuilding the project or updating the appcompat dependency to
+        // version 1.1.0 or higher.
+        CameraX.bindToLifecycle(this, preview, analyzerUseCase);
+
+//        CameraX.bindToLifecycle( this, preview);
     }
 
     private void updateTransform() {
