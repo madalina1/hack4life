@@ -1,2 +1,2 @@
-include ':app', ':pocketsphinx-android-5prealpha-release'
+include ':app', ':pocketsphinx-android-5prealpha-release', ':java-string-similarity-1.2.1'
 rootProject.name='AVC'
